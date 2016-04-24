@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4C3C4952"
+    tools:context="github.hellocsl.cursorwheellayout.MainActivity">
+
+
+    <github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout
+        android:id="@+id/test_circle_menu_left"
+        android:layout_width="306dip"
+        android:layout_height="306dip"
+        android:layout_gravity="center_vertical|bottom"
+        android:layout_marginLeft="-153dip"
+        app:wheelSelectedAngle="0">
+
+        <github.hellocsl.cursorwheellayout.widget.SwitchButton
+            android:id="@id/id_wheel_menu_center_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:boardWidth="0dip"
+            app:uncheckRevealColor="#ff2a2f36"
+        />
+    </github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout>
+
+    <github.hellocsl.cursorwheel.CursorWheelLayout
+        android:id="@+id/test_circle_menu_top"
+        android:layout_width="280dip"
+        android:layout_height="280dip"
+        android:layout_gravity="center_horizontal|top"
+        app:wheelCursorColor="#009688"
+        app:wheelCursorHeight="19dip"
+        app:wheelSelectedAngle="270">
+
+        <TextView
+            android:id="@id/id_wheel_menu_center_item"
+            style="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Wheel"
+            android:textColor="#009688"
+        />
+    </github.hellocsl.cursorwheel.CursorWheelLayout>
+
+    <github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout
+        android:id="@+id/test_circle_menu_right"
+        android:layout_width="306dip"
+        android:layout_height="306dip"
+        android:layout_gravity="center_vertical|right|bottom"
+        android:layout_marginBottom="-153dp"
+        android:layout_marginRight="-153dip"
+        app:wheelBackgroundColor="@color/colorAccent_Translucent"
+        app:wheelCursorColor="@color/red"
+        app:wheelCursorHeight="20dip"
+        app:wheelFlingValue="460"
+        app:wheelSelectedAngle="225">
+
+        <github.hellocsl.cursorwheellayout.widget.SwitchButton
+            android:id="@id/id_wheel_menu_center_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:boardWidth="0dip"
+            app:uncheckRevealColor="#ff2a2f36"
+        />
+    </github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout>
+
+    <Button android:id="@+id/main_button_random_selected"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="?attr/selectableItemBackground"
+            android:padding="10dip"
+            android:text="Random Selected"/>
+</FrameLayout>

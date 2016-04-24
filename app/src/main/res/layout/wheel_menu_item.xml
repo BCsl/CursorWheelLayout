@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             tools:background="@color/bg_wheel">
+
+
+    <TextView
+        android:id="@+id/wheel_menu_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="10dip"
+        android:textColor="@color/primary_text_light"
+        android:textSize="14.0dip"
+        tools:text="Test"
+        tools:visibility="visible"/>
+
+</FrameLayout>

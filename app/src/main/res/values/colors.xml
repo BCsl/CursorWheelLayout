@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2a2f36</color>
+    <color name="colorPrimaryDark">#2a2f36</color>
+    <color name="colorAccent">#FFC52A</color>
+    <color name="colorAccent_Translucent">#7CFFC52A</color>
+
+    <color name="primary_text_drak">#212121</color>
+    <color name="secondary_text_drak">#727272</color>
+
+    <color name="primary_text_light">#ffffff</color>
+    <color name="secondary_text_light">#4cffffff</color>
+
+
+    <color name="bg_wheel">#e513171c</color>
+
+    <color name="red">#f36337</color>
+</resources>

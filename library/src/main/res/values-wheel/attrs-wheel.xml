@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CursorWheelLayout">
+        <attr name="wheelSelectedAngle" format="float"></attr>
+        <attr name="wheelPaddingRadio" format="float"></attr>
+        <attr name="wheelCenterRadio" format="float"></attr>
+        <attr name="wheelItemRadio" format="float"></attr>
+        <attr name="wheelFlingValue" format="integer"></attr>
+        <attr name="wheelCursorHeight" format="dimension"></attr>
+        <attr name="wheelCursorColor" format="color"></attr>
+        <attr name="wheelBackgroundColor" format="color"></attr>
+    </declare-styleable>
+</resources>
