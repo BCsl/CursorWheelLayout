@@ -60,12 +60,23 @@ public class MainActivity extends AppCompatActivity implements CursorWheelLayout
         imageDatas.add(new ImageData(R.drawable.ic_bank_jiaotong, "5"));
         SimpleImageAdapter simpleImageAdapter = new SimpleImageAdapter(this, imageDatas);
         mTestCircleMenuTop.setAdapter(simpleImageAdapter);
-        mTestCircleMenuTop.setOnMenuSelectedListener(this);
+        mTestCircleMenuTop.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {
+            @Override
+            public void onItemSelected(CursorWheelLayout parent, View view, int pos) {
+                Toast.makeText(MainActivity.this, "Top Menu selected position:" + pos, Toast.LENGTH_SHORT).show();
+            }
+        });
+        mTestCircleMenuTop.setOnMenuItemClickListener(new CursorWheelLayout.OnMenuItemClickListener() {
+            @Override
+            public void onItemClick(View view, int pos) {
+                Toast.makeText(MainActivity.this, "Top Menu click position:" + pos, Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
     public void onItemSelected(CursorWheelLayout p, View view, int pos) {
-        Toast.makeText(this,"selected:"+pos,Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.main_button_random_selected)

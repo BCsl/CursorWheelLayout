@@ -7,9 +7,10 @@ The CursorWheelLayout can be used as a way to select one item from a list. The `
 You can also receive a callback for when an item is clicked, and whether it is selected. Have a look at the sample for a working example!
 
 ## Screenshot
-
+![1]
+![2]
 ## Apk
-
+![3]
 
 ## Usage
 1) Add a custom view in Xml
@@ -40,15 +41,15 @@ You can also receive a callback for when an item is clicked, and whether it is s
 2) Define your `WheelCycleAdapter`
 ```java
 public class SimpleTextAdapter implements CursorWheelLayout.CycleWheelAdapter{
-        
+
         public int getCount(){
         //...
         }
-        
+
         public View getView(View parent, int position){
         //...
         }
-        
+
         public Object getItem(int position){
         //...
         }
@@ -61,7 +62,7 @@ public class SimpleTextAdapter implements CursorWheelLayout.CycleWheelAdapter{
         mTestCircleMenuLeft.setAdapter(simpleTextAdapter);
 ```
 
-## Listener 
+## Listener
 1) A listener for when the closest item to the `SelectionAngle` changes.
 ```java
       mTestCircleMenuTop.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {
@@ -100,3 +101,6 @@ http://blog.csdn.net/lmj623565791/article/details/43131133
 ## License
 Apache License Version 2.0
 http://apache.org/licenses/LICENSE-2.0.txt
+
+[1]: ./screenshot/gif2.gif
+[2]: ./screenshot/gif3.gif
