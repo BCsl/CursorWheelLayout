@@ -10,7 +10,8 @@ You can also receive a callback for when an item is clicked, and whether it is s
 ![1]
 ![2]
 ## Apk
-![3]
+
+[Download Demo here](https://github.com/BCsl/CursorWheelLayout/tree/master/demo/app-debug.apk)
 
 ## Usage
 1) Add a custom view in Xml
