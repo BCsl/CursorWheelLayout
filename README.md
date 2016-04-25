@@ -16,7 +16,19 @@ You can also receive a callback for when an item is clicked, and whether it is s
 ## Setup
 
 ### Gradle
+
 `compile 'github.hellocsl:CursorWheelLayout:1.0.0'`
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>github.hellocsl</groupId>
+  <artifactId>CursorWheelLayout</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
+```
 
 ## Usage
 1) Add a custom view in Xml
