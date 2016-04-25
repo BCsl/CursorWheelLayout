@@ -33,7 +33,7 @@ You can also receive a callback for when an item is clicked, and whether it is s
 ## Usage
 1) Add a custom view in Xml
 ```xml
-  <github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout
+  <github.hellocsl.cursorwheel.CursorWheelLayout
         android:id="@+id/test_circle_menu_right"
         android:layout_width="306dip"
         android:layout_height="306dip"
@@ -53,7 +53,7 @@ You can also receive a callback for when an item is clicked, and whether it is s
             app:boardWidth="0dip"
             app:uncheckRevealColor="#ff2a2f36"
         />
-    </github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout>
+    </github.hellocsl.cursorwheel.CursorWheelLayout>
 
 ```
 2) Define your `WheelCycleAdapter`
