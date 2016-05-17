@@ -206,12 +206,18 @@ public class CursorWheelLayout extends ViewGroup {
     }
 
     public CursorWheelLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        initWheel(context, attrs);
     }
+
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CursorWheelLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        initWheel(context, attrs);
+    }
+
+    private void initWheel(Context context, AttributeSet attrs) {
         setPadding(0, 0, 0, 0);
         final float density = context.getResources().getDisplayMetrics().density;
         mTriangleHeight = (int) (DEFAULT_TRIANGLE_HEIGHT * density + 0.5);
@@ -230,9 +236,7 @@ public class CursorWheelLayout extends ViewGroup {
             mPaddingRadio = ta.getFloat(R.styleable.CursorWheelLayout_wheelPaddingRadio, RADIO_PADDING_LAYOUT);
             ta.recycle();
         }
-
         init(context);
-
     }
 
     private void init(Context context) {
