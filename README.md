@@ -11,13 +11,13 @@ You can also receive a callback for when an item is clicked, and whether it is s
 ![2]
 ## Apk
 
-[Download Demo here](https://github.com/BCsl/CursorWheelLayout/tree/master/demo/app-debug.apk)
+[Download Demo here](https://github.com/BCsl/CursorWheelLayout/tree/master/demo/wheel-v1.01.apk)
 
 ## Setup
 
 ### Gradle
 
-`compile 'github.hellocsl:CursorWheelLayout:1.0.0'`
+`compile 'github.hellocsl:CursorWheelLayout:1.0.1'`
 
 ### Maven
 
@@ -25,7 +25,7 @@ You can also receive a callback for when an item is clicked, and whether it is s
 <dependency>
   <groupId>github.hellocsl</groupId>
   <artifactId>CursorWheelLayout</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
