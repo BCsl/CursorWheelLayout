@@ -17,7 +17,7 @@ You can also receive a callback for when an item is clicked, and whether it is s
 
 ### Gradle
 
-`compile 'github.hellocsl:CursorWheelLayout:1.0.1'`
+`compile 'github.hellocsl:CursorWheelLayout:1.0.2'`
 
 ### Maven
 
@@ -25,7 +25,7 @@ You can also receive a callback for when an item is clicked, and whether it is s
 <dependency>
   <groupId>github.hellocsl</groupId>
   <artifactId>CursorWheelLayout</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -111,6 +111,7 @@ public class SimpleTextAdapter implements CursorWheelLayout.CycleWheelAdapter{
   * wheelCursorHeight
   * wheelCursorColor
   * wheelBackgroundColor
+  * wheelRotateItem
 
 
 ## Refer to

@@ -28,7 +28,8 @@ import android.view.WindowManager;
  * @attr ref wheelFlingValue
  * @attr ref wheelCursorColor
  * @attr ref wheelCursorHeight
- * @see github.hellocsl.cursorwheel.R.attr
+ * @attr ref wheelRotateItem
+ * @see R.github.hellocsl.cursorwheel.R.attr
  */
 public class CursorWheelLayout extends ViewGroup {
     private static final String TAG = "CircleMenuLayout";
@@ -174,6 +175,7 @@ public class CursorWheelLayout extends ViewGroup {
 
     private int mTriangleHeight;
 
+
     /**
      * callback on menu item being click
      */
@@ -196,6 +198,8 @@ public class CursorWheelLayout extends ViewGroup {
     private float mMenuRadioDimension;
     private float mCenterRadioDimension;
     private float mPaddingRadio;
+
+    private boolean mRotateItem;
 
     public CursorWheelLayout(Context context) {
         this(context, null);
@@ -234,6 +238,7 @@ public class CursorWheelLayout extends ViewGroup {
             mMenuRadioDimension = ta.getFloat(R.styleable.CursorWheelLayout_wheelItemRadio, RADIO_DEFAULT_CHILD_DIMENSION);
             mCenterRadioDimension = ta.getFloat(R.styleable.CursorWheelLayout_wheelCenterRadio, RADIO_DEFAULT_CENTER_DIMENSION);
             mPaddingRadio = ta.getFloat(R.styleable.CursorWheelLayout_wheelPaddingRadio, RADIO_PADDING_LAYOUT);
+            mRotateItem = ta.getBoolean(R.styleable.CursorWheelLayout_wheelRotateItem, true);
             ta.recycle();
         }
         init(context);
@@ -417,9 +422,11 @@ public class CursorWheelLayout extends ViewGroup {
                     * cWidth);
 
             child.layout(left, top, left + cWidth, top + cWidth);
-            child.setPivotX(cWidth / 2.0f);
-            child.setPivotY(cWidth / 2.0f);
-            child.setRotation((float) (90 + mStartAngle));
+            if (mRotateItem) {
+                child.setPivotX(cWidth / 2.0f);
+                child.setPivotY(cWidth / 2.0f);
+                child.setRotation((float) (90 + mStartAngle));
+            }
             mStartAngle += angleDelay;
 
         }

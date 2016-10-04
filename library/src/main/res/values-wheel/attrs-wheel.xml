@@ -9,5 +9,6 @@
         <attr name="wheelCursorHeight" format="dimension"></attr>
         <attr name="wheelCursorColor" format="color"></attr>
         <attr name="wheelBackgroundColor" format="color"></attr>
+        <attr name="wheelRotateItem" format="boolean"></attr>
     </declare-styleable>
 </resources>

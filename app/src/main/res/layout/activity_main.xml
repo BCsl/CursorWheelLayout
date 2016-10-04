@@ -33,6 +33,7 @@
         android:layout_gravity="center_horizontal|top"
         app:wheelCursorColor="#009688"
         app:wheelCursorHeight="19dip"
+        app:wheelRotateItem="false"
         app:wheelSelectedAngle="270">
 
         <TextView

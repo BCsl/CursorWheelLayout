@@ -29,7 +29,7 @@ publish {
     userOrg = 'bcsl'
     groupId = 'github.hellocsl'
     artifactId = 'CursorWheelLayout'
-    publishVersion = '1.0.1'
+    publishVersion = '1.0.2'
     desc = 'An Android Widget for selecting items that rotate on a wheel'
     website = 'https://github.com/BCsl/CursorWheelLayout'
 }
