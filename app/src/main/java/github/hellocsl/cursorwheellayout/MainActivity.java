@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements CursorWheelLayout
     void onRandomClick() {
         int index = mRandom.nextInt(10);
         mTestCircleMenuLeft.setSelection(index);
-        mTestCircleMenuRight.setSelection(index);
+        mTestCircleMenuRight.setSelection(index, false);
         mMainButtonRadonSelected.setText("Random Selected:" + index);
     }
 }

@@ -798,6 +798,16 @@ public class CursorWheelLayout extends ViewGroup {
      * is the Wheel's center).
      */
     private void scrollIntoSlots() {
+        scrollIntoSlots(true);
+    }
+
+    /**
+     * Scrolls the items so that the selected item is in its 'slot' (its center
+     * is the Wheel's center).
+     *
+     * @param showAnimation Weather show fling animation or not
+     */
+    private void scrollIntoSlots(boolean showAnimation) {
         if (mIsDraging || mIsFling) {
             return;
         }
@@ -835,8 +845,14 @@ public class CursorWheelLayout extends ViewGroup {
             } else {
                 clockWise = (mSelectedAngle >= angle && mSelectedAngle <= diagonal);
             }
-            mFlingRunnable.stop(false);
-            mFlingRunnable.startUsingAngle(diff * (clockWise ? 1 : -1));
+            double sweepAngle = diff * (clockWise ? 1 : -1);
+            if (showAnimation) {
+                mFlingRunnable.stop(false);
+                mFlingRunnable.startUsingAngle(sweepAngle);
+            } else {
+                mStartAngle += sweepAngle;
+                requestLayout();
+            }
         }
     }
 
@@ -1004,7 +1020,15 @@ public class CursorWheelLayout extends ViewGroup {
     /**
      * @param position
      */
-    public void setSelection(final int position) {
+    public void setSelection(int position) {
+        setSelection(position, true);
+    }
+
+
+    /**
+     * @param position
+     */
+    public void setSelection(final int position, final boolean animation) {
         if (position > mMenuItemCount) {
             throw new IllegalArgumentException("Position:" + position + " is out of index!");
         }
@@ -1018,10 +1042,11 @@ public class CursorWheelLayout extends ViewGroup {
                 mTempSelectedPosition = itemPosition;
                 mTempSelectedView = getChildAt(itemPosition);
                 mNeedSlotIntoCenter = true;
-                scrollIntoSlots();
+                scrollIntoSlots(animation);
             }
         });
     }
+
 
     public void setSelectedAngle(double selectedAngle) {
         if (selectedAngle < 0) {
