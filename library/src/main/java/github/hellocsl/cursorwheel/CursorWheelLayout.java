@@ -3,9 +3,14 @@ package github.hellocsl.cursorwheel;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.DataSetObservable;
+import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
+import android.graphics.Region;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
@@ -76,8 +81,15 @@ public class CursorWheelLayout extends ViewGroup {
     @ColorInt
     int DEFAULT_WHEEL_BG_COLOR = 0xe513171c;
 
+    public static final
+    @ColorInt
+    int DEFAULT_GUIDE_LINE_COLOR = 0xff727272;
+
     //DP
-    private static final int DEFAULT_TRIANGLE_HEIGHT = 13;
+    public static final int DEFAULT_TRIANGLE_HEIGHT = 13;
+
+    //DP
+    public static final int DEFAULT_GUIDE_LINE_WIDTH = 0;
 
 
     /**
@@ -176,6 +188,10 @@ public class CursorWheelLayout extends ViewGroup {
     private int mTriangleHeight;
 
 
+    private int mGuideLineWidth;
+
+    private int mGuideLineColor;
+
     /**
      * callback on menu item being click
      */
@@ -199,7 +215,20 @@ public class CursorWheelLayout extends ViewGroup {
     private float mCenterRadioDimension;
     private float mPaddingRadio;
 
+    private boolean mIsDebug = false;
+
+    private Path mWheelBgPath = new Path();
+
+    private Matrix mBgMatrix = new Matrix();
+
+    private Region mBgRegion = new Region();
+
+    private Path mGuidePath = new Path();
+
+    private Paint mGuidePaint;
+
     private boolean mRotateItem;
+
 
     public CursorWheelLayout(Context context) {
         this(context, null);
@@ -225,6 +254,7 @@ public class CursorWheelLayout extends ViewGroup {
         setPadding(0, 0, 0, 0);
         final float density = context.getResources().getDisplayMetrics().density;
         mTriangleHeight = (int) (DEFAULT_TRIANGLE_HEIGHT * density + 0.5);
+        mGuideLineWidth = (int) (DEFAULT_GUIDE_LINE_WIDTH * density + 0.5);
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CursorWheelLayout);
             mSelectedAngle = ta.getFloat(R.styleable.CursorWheelLayout_wheelSelectedAngle, DEFAULT_SELECTED_ANGLE);
@@ -238,6 +268,8 @@ public class CursorWheelLayout extends ViewGroup {
             mMenuRadioDimension = ta.getFloat(R.styleable.CursorWheelLayout_wheelItemRadio, RADIO_DEFAULT_CHILD_DIMENSION);
             mCenterRadioDimension = ta.getFloat(R.styleable.CursorWheelLayout_wheelCenterRadio, RADIO_DEFAULT_CENTER_DIMENSION);
             mPaddingRadio = ta.getFloat(R.styleable.CursorWheelLayout_wheelPaddingRadio, RADIO_PADDING_LAYOUT);
+            mGuideLineWidth = ta.getDimensionPixelOffset(R.styleable.CursorWheelLayout_wheelGuideLineWidth, mGuideLineWidth);
+            mGuideLineColor = ta.getColor(R.styleable.CursorWheelLayout_wheelGuideLineColor, DEFAULT_GUIDE_LINE_COLOR);
             mRotateItem = ta.getBoolean(R.styleable.CursorWheelLayout_wheelRotateItem, true);
             ta.recycle();
         }
@@ -256,6 +288,11 @@ public class CursorWheelLayout extends ViewGroup {
         mWheelPaint.setColor(mWheelBgColor);
         mWheelPaint.setDither(true);
 
+        mGuidePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mGuidePaint.setStrokeWidth(mGuideLineWidth);
+        mGuidePaint.setColor(mGuideLineColor);
+        mGuidePaint.setDither(true);
+        mGuidePaint.setStyle(Paint.Style.STROKE);
 
         mTrianglePath = new Path();
     }
@@ -296,7 +333,6 @@ public class CursorWheelLayout extends ViewGroup {
             child.measure(makeMeasureSpec, makeMeasureSpec);
         }
         mPadding = mPaddingRadio * mRootDiameter;
-        initTriangle();
     }
 
     private int resolveSizeAndState(int desireSize, int measureSpec) {
@@ -331,9 +367,9 @@ public class CursorWheelLayout extends ViewGroup {
      */
     private void initTriangle() {
         int layoutRadial = (int) (mRootDiameter / 2.0);
-        mTrianglePath.moveTo(0, layoutRadial - mTriangleHeight);
-        mTrianglePath.lineTo(0 - mTriangleHeight / 2.0f, layoutRadial);
-        mTrianglePath.lineTo(0 + mTriangleHeight / 2.0f, layoutRadial);
+        mTrianglePath.moveTo(layoutRadial - mTriangleHeight, 0);
+        mTrianglePath.lineTo(layoutRadial, 0 - mTriangleHeight / 2.0f);
+        mTrianglePath.lineTo(layoutRadial, 0 + mTriangleHeight / 2.0f);
         mTrianglePath.close();
     }
 
@@ -358,7 +394,6 @@ public class CursorWheelLayout extends ViewGroup {
         final int childCount = getChildCount();
 
         int left, top;
-        int childCenterX, childCenterY;
         // size of menu item
         int cWidth = (int) (layoutDiameter * mMenuRadioDimension);
 
@@ -401,11 +436,6 @@ public class CursorWheelLayout extends ViewGroup {
                 //allowable error
                 mNeedSlotIntoCenter = ((int) minimumAngleDiff) != 0;
             }
-//            if (BuildConfig.DEBUG) {
-//                Log.d(TAG, "onLayout(),cur position:,i:" + (i - 1) + ",angleDiff：" + angleDiff + ",angle:" + mStartAngle);
-//                Log.d(TAG, "onLayout(),mTempSelectedPosition:" + mTempSelectedPosition + ",mNeedSlotIntoCenter:" + mNeedSlotIntoCenter + ",minimumAngleDiff：" + minimumAngleDiff);
-//            }
-
             // 计算，中心点到menu item中心的距离
             float tmp = layoutRadial - cWidth / 2 - mPadding;
 
@@ -445,17 +475,32 @@ public class CursorWheelLayout extends ViewGroup {
     }
 
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mBgMatrix.reset();
+        initTriangle();
+        int radial = (int) (mRootDiameter / 2.0f);
+        mWheelBgPath.addCircle(0, 0, radial, Path.Direction.CW);
+    }
+
+    @Override
     public void requestLayout() {
         mIsFirstLayout = true;
         super.requestLayout();
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //Draw Wheel's Background
         canvas.save();
         int radial = (int) (mRootDiameter / 2.0f);
-        canvas.drawCircle(radial, radial, radial, mWheelPaint);
+        canvas.translate(radial, radial);
+        if (mBgMatrix.isIdentity()) {
+            canvas.getMatrix().invert(mBgMatrix);
+        }
+        canvas.drawPath(mWheelBgPath, mWheelPaint);
         canvas.restore();
     }
 
@@ -463,10 +508,73 @@ public class CursorWheelLayout extends ViewGroup {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         canvas.save();
-        canvas.rotate((float) (mSelectedAngle - 90), mRootDiameter / 2f, mRootDiameter / 2f);
         canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
+        canvas.rotate((float) (mSelectedAngle), 0, 0);
         canvas.drawPath(mTrianglePath, mCursorPaint);
         canvas.restore();
+        if (mIsDebug) {
+            canvas.save();
+            canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
+            canvas.drawCircle(0, 0, 10, mCursorPaint);
+            float angleDelay;
+            int startIndex;
+            if (getCenterItem() != null) {
+                angleDelay = 360 / (getChildCount() - 1);
+                startIndex = 1;
+            } else {
+                angleDelay = 360 / (getChildCount());
+                startIndex = 0;
+            }
+            for (int i = 0; i < 360; i += angleDelay) {
+                canvas.save();
+                canvas.rotate(i);
+                mCursorPaint.setTextAlign(Paint.Align.RIGHT);
+                mCursorPaint.setTextSize(28);
+                canvas.drawText(i + "°", mRootDiameter / 2.f, 0, mCursorPaint);
+                canvas.restore();
+            }
+            canvas.restore();
+            canvas.save();
+            canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
+            View child = getChildAt(startIndex);
+            int startAngel = (int) (((Double) child.getTag(R.id.id_wheel_view_angle) + angleDelay / 2.f) % 360);
+            for (int i = startIndex; i < getChildCount(); i++) {
+                canvas.save();
+                canvas.rotate(startAngel);
+                canvas.drawLine(0, 0, mRootDiameter / 2f, 0, mCursorPaint);
+                mCursorPaint.setTextAlign(Paint.Align.RIGHT);
+                mCursorPaint.setTextSize(38);
+                startAngel += angleDelay;
+                canvas.restore();
+            }
+            canvas.restore();
+        }
+        if (mGuideLineWidth > 0) {
+            float angleDelay;
+            int startIndex;
+            if (getCenterItem() != null) {
+                angleDelay = 360 / (getChildCount() - 1);
+                startIndex = 1;
+            } else {
+                angleDelay = 360 / (getChildCount());
+                startIndex = 0;
+            }
+            canvas.save();
+            canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
+            View child = getChildAt(startIndex);
+            int startAngel = (int) (((Double) child.getTag(R.id.id_wheel_view_angle) + angleDelay / 2.f) % 360);
+            for (int i = startIndex; i < getChildCount(); i++) {
+                canvas.save();
+                canvas.rotate(startAngel);
+                mGuidePath.reset();
+                mGuidePath.moveTo(0, 0);
+                mGuidePath.lineTo(mRootDiameter / 2.f, 0);
+                canvas.drawPath(mGuidePath, mGuidePaint);
+                startAngel += angleDelay;
+                canvas.restore();
+            }
+            canvas.restore();
+        }
     }
 
     @Override
@@ -476,6 +584,9 @@ public class CursorWheelLayout extends ViewGroup {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                if (!isEventInWheel(x, y)) {
+                    return false;
+                }
                 mLastX = x;
                 mLastY = y;
                 mDownTime = System.currentTimeMillis();
@@ -540,6 +651,22 @@ public class CursorWheelLayout extends ViewGroup {
     }
 
     /**
+     * @param x the X coordinate of this event for the touching pointer
+     * @param y the Y coordinate of this event for the touching pointer
+     * @return Is touching the wheel
+     */
+    private boolean isEventInWheel(float x, float y) {
+        float[] pts = new float[2];
+        pts[0] = x;
+        pts[1] = y;
+        mBgMatrix.mapPoints(pts);
+        RectF bounds = new RectF();
+        mWheelBgPath.computeBounds(bounds, true);
+        mBgRegion.setPath(mWheelBgPath, new Region((int) bounds.left, (int) bounds.top, (int) bounds.right, (int) bounds.bottom));
+        return mBgRegion.contains((int) pts[0], (int) pts[1]);
+    }
+
+    /**
      * 如果触摸事件交由自己处理，都接受好了
      */
     @Override
@@ -580,6 +707,9 @@ public class CursorWheelLayout extends ViewGroup {
 
     }
 
+    public void setDebug(boolean debug) {
+        mIsDebug = debug;
+    }
 
     public void setAdapter(CycleWheelAdapter adapter) {
         if (adapter == null) {
@@ -587,11 +717,33 @@ public class CursorWheelLayout extends ViewGroup {
         }
 
         if (mWheelAdapter != null) {
-            Log.w(TAG, "setAdapter() already called!");
+            if (mWheelDataSetObserver != null) {
+                mWheelAdapter.unregisterDataSetObserver(mWheelDataSetObserver);
+            }
+            removeAllViews();
+            mWheelDataSetObserver = null;
         }
         mWheelAdapter = adapter;
-        mMenuItemCount = adapter.getCount();
+        mWheelDataSetObserver = new WheelDataSetObserver();
+        mWheelAdapter.registerDataSetObserver(mWheelDataSetObserver);
         addMenuItems();
+    }
+
+    private void onDateSetChanged() {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "onDateSetChanged() called with: " + "");
+        }
+        mFlingRunnable.stop(false);
+        removeAllViews();
+        addMenuItems();
+        mStartAngle = mSelectedAngle;
+        mSelectedPosition = INVALID_POSITION;
+        mTempSelectedPosition = INVALID_POSITION;
+        mSelectedView = null;
+        mTempSelectedView = null;
+        mIsDraging = false;
+        mIsFling = false;
+        requestLayout();
     }
 
 
@@ -602,9 +754,7 @@ public class CursorWheelLayout extends ViewGroup {
         if (mWheelAdapter == null || mWheelAdapter.getCount() == 0) {
             throw new IllegalArgumentException("Empty menu source!");
         }
-        if (mWheelAdapter.getCount() != mMenuItemCount) {
-            throw new IllegalArgumentException("MenuSource has been modified after setting into CursorWheelLayout!");
-        }
+        mMenuItemCount = mWheelAdapter.getCount();
         View view;
         for (int i = 0; i < mMenuItemCount; i++) {
             final int j = i;
@@ -645,7 +795,7 @@ public class CursorWheelLayout extends ViewGroup {
 
     /**
      * Scrolls the items so that the selected item is in its 'slot' (its center
-     * is the gallery's center).
+     * is the Wheel's center).
      */
     private void scrollIntoSlots() {
         if (mIsDraging || mIsFling) {
@@ -667,9 +817,14 @@ public class CursorWheelLayout extends ViewGroup {
                 selectionChangeCallback();
             }
         } else {
-            double angle = (double) mTempSelectedView.getTag(R.id.id_wheel_view_angle);
+            double angle;
+            try {
+                angle = (double) mTempSelectedView.getTag(R.id.id_wheel_view_angle);
+            } catch (NullPointerException e) {
+                return;
+            }
             if (angle > 360) {
-                throw new IllegalStateException("includedAngle>180, may be something wrong with calculate angle on layout");
+                Log.w(TAG, "scrollIntoSlots:" + angle + " > 360, may be something wrong with calculate angle onLayout");
             }
             double diff = Math.abs(mSelectedAngle - angle);
             diff = diff >= 180 ? 360 - diff : diff;
@@ -706,7 +861,7 @@ public class CursorWheelLayout extends ViewGroup {
      */
     private class FlingRunnable implements Runnable {
 
-        private static final int DEFAULT_REFRESH_TIME = 30;
+        private static final int DEFAULT_REFRESH_TIME = 16;
 
         /**
          * 滑动速度
@@ -775,12 +930,12 @@ public class CursorWheelLayout extends ViewGroup {
 
         public void run() {
             if (mMenuItemCount == 0) {
-                endFling(true);
+                stop(true);
                 return;
             }
             if (!mStartUsingAngle) {
                 if ((int) Math.abs(mAngelPerSecond) < 20) {
-                    endFling(true);
+                    stop(true);
                     return;
                 }
                 mIsFling = true;
@@ -790,7 +945,7 @@ public class CursorWheelLayout extends ViewGroup {
                 mStartAngle %= 360;
                 if (Math.abs((int) (mEndAngle - mInitStarAngle)) == 0 || (mBiggerBefore && (mInitStarAngle < mEndAngle)) || (!mBiggerBefore && (mInitStarAngle > mEndAngle))) {
                     mNeedSlotIntoCenter = false;
-                    endFling(true);
+                    stop(true);
                     return;
                 }
                 mIsFling = true;
@@ -879,6 +1034,13 @@ public class CursorWheelLayout extends ViewGroup {
         requestLayout();
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        removeAllViews();
+        super.onDetachedFromWindow();
+        mFlingRunnable.stop(false);
+        mIsFirstLayout = false;
+    }
 
     /**
      * to do whatever you want to perform the selected view
@@ -909,21 +1071,53 @@ public class CursorWheelLayout extends ViewGroup {
         void onItemSelected(CursorWheelLayout parent, View view, int pos);
     }
 
+    private WheelDataSetObserver mWheelDataSetObserver;
+
+    /**
+     * @author chensuilun
+     */
+    public class WheelDataSetObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            onDateSetChanged();
+        }
+    }
+
     /**
      * An Adapter object acts as a bridge between an {@link CursorWheelLayout} and the
      * underlying data for that view. The Adapter provides access to the data items.
-     * The Adapter is also responsible for making a {@link android.view.View} for
+     * The Adapter is also responsible for making a {@link View} for
      * each item in the data set.
      *
      * @author chensuilun
      */
-    public interface CycleWheelAdapter {
+    public static abstract class CycleWheelAdapter {
+
+        private final DataSetObservable mDataSetObservable = new DataSetObservable();
+
+        public void registerDataSetObserver(DataSetObserver observer) {
+            mDataSetObservable.registerObserver(observer);
+        }
+
+        public void unregisterDataSetObserver(DataSetObserver observer) {
+            mDataSetObservable.unregisterObserver(observer);
+        }
+
+        /**
+         * Notifies the attached observers that the underlying data has been changed
+         * and any View reflecting the data set should refresh itself.
+         */
+        public void notifyDataSetChanged() {
+            mDataSetObservable.notifyChanged();
+        }
+
         /**
          * How many menu items are in the data set represented by this Adapter.
          *
          * @return Count of items.
          */
-        public int getCount();
+        public abstract int getCount();
 
         /**
          * Get a View that displays the data at the specified position in the data set.
@@ -932,7 +1126,7 @@ public class CursorWheelLayout extends ViewGroup {
          * @param position
          * @return
          */
-        public View getView(View parent, int position);
+        public abstract View getView(View parent, int position);
 
         /**
          * Get the data item associated with the specified position in the data set.
@@ -941,7 +1135,7 @@ public class CursorWheelLayout extends ViewGroup {
          *                 data set.
          * @return The data at the specified position.
          */
-        public Object getItem(int position);
+        public abstract Object getItem(int position);
     }
 
 }

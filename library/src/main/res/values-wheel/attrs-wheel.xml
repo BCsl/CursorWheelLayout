@@ -10,5 +10,7 @@
         <attr name="wheelCursorColor" format="color"></attr>
         <attr name="wheelBackgroundColor" format="color"></attr>
         <attr name="wheelRotateItem" format="boolean"></attr>
+        <attr name="wheelGuideLineWidth" format="dimension"></attr>
+        <attr name="wheelGuideLineColor" format="color"></attr>
     </declare-styleable>
 </resources>

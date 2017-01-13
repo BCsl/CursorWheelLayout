@@ -14,7 +14,7 @@ import github.hellocsl.cursorwheellayout.data.ImageData;
 /**
  * Created by chensuilun on 16/4/24.
  */
-public class SimpleImageAdapter implements CursorWheelLayout.CycleWheelAdapter {
+public class SimpleImageAdapter extends CursorWheelLayout.CycleWheelAdapter {
     private List<ImageData> mMenuItemDatas;
     private LayoutInflater mLayoutInflater;
     private Context mContext;
