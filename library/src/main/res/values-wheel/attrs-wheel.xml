@@ -9,7 +9,11 @@
         <attr name="wheelCursorHeight" format="dimension"></attr>
         <attr name="wheelCursorColor" format="color"></attr>
         <attr name="wheelBackgroundColor" format="color"></attr>
-        <attr name="wheelRotateItem" format="boolean"></attr>
+        <attr name="wheelItemRotateMode" format="enum">
+            <enum name="none" value="0"></enum>
+            <enum name="inward" value="1"></enum>
+            <enum name="outward" value="2"></enum>
+        </attr>
         <attr name="wheelGuideLineWidth" format="dimension"></attr>
         <attr name="wheelGuideLineColor" format="color"></attr>
     </declare-styleable>

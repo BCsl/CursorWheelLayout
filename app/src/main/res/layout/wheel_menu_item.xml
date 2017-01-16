@@ -11,9 +11,9 @@
         android:id="@+id/wheel_menu_item_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="10dip"
+        android:layout_gravity="center|center_horizontal"
         android:textColor="@color/primary_text_light"
+        android:padding="6dip"
         android:textSize="14.0dip"
         tools:text="Test"
         tools:visibility="visible"/>

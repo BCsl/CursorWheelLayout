@@ -15,6 +15,7 @@
         android:layout_height="306dip"
         android:layout_gravity="center_vertical|bottom"
         android:layout_marginLeft="-153dip"
+        app:wheelItemRotateMode="outward"
         app:wheelSelectedAngle="0">
 
         <github.hellocsl.cursorwheellayout.widget.SwitchButton
@@ -33,7 +34,7 @@
         android:layout_gravity="center_horizontal|top"
         app:wheelCursorColor="#009688"
         app:wheelCursorHeight="19dip"
-        app:wheelRotateItem="false"
+        app:wheelItemRotateMode="none"
         app:wheelSelectedAngle="270">
 
         <TextView
@@ -58,6 +59,7 @@
         app:wheelCursorColor="@color/red"
         app:wheelCursorHeight="20dip"
         app:wheelFlingValue="460"
+        app:wheelItemRotateMode="inward"
         app:wheelSelectedAngle="225">
 
         <github.hellocsl.cursorwheellayout.widget.SwitchButton

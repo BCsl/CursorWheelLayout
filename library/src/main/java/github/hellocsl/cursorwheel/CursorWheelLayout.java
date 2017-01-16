@@ -33,7 +33,9 @@ import android.view.WindowManager;
  * @attr ref wheelFlingValue
  * @attr ref wheelCursorColor
  * @attr ref wheelCursorHeight
- * @attr ref wheelRotateItem
+ * @attr ref wheelItemRotateMode
+ * @attr ref wheelGuideLineWidth
+ * @attr ref wheelGuideLineColor
  * @see R.github.hellocsl.cursorwheel.R.attr
  */
 public class CursorWheelLayout extends ViewGroup {
@@ -90,6 +92,14 @@ public class CursorWheelLayout extends ViewGroup {
 
     //DP
     public static final int DEFAULT_GUIDE_LINE_WIDTH = 0;
+    /**
+     * Don't rotate my item.DEFAULT
+     */
+    public static final int ITEM_ROTATE_MODE_NONE = 0;
+
+    public static final int ITEM_ROTATE_MODE_INWARD = 1;
+
+    public static final int ITEM_ROTATE_MODE_OUTWARD = 2;
 
 
     /**
@@ -227,7 +237,8 @@ public class CursorWheelLayout extends ViewGroup {
 
     private Paint mGuidePaint;
 
-    private boolean mRotateItem;
+
+    private int mItemRotateMode = ITEM_ROTATE_MODE_NONE;
 
 
     public CursorWheelLayout(Context context) {
@@ -270,7 +281,7 @@ public class CursorWheelLayout extends ViewGroup {
             mPaddingRadio = ta.getFloat(R.styleable.CursorWheelLayout_wheelPaddingRadio, RADIO_PADDING_LAYOUT);
             mGuideLineWidth = ta.getDimensionPixelOffset(R.styleable.CursorWheelLayout_wheelGuideLineWidth, mGuideLineWidth);
             mGuideLineColor = ta.getColor(R.styleable.CursorWheelLayout_wheelGuideLineColor, DEFAULT_GUIDE_LINE_COLOR);
-            mRotateItem = ta.getBoolean(R.styleable.CursorWheelLayout_wheelRotateItem, true);
+            mItemRotateMode = ta.getInt(R.styleable.CursorWheelLayout_wheelItemRotateMode, ITEM_ROTATE_MODE_NONE);
             ta.recycle();
         }
         init(context);
@@ -452,11 +463,24 @@ public class CursorWheelLayout extends ViewGroup {
                     * cWidth);
 
             child.layout(left, top, left + cWidth, top + cWidth);
-            if (mRotateItem) {
-                child.setPivotX(cWidth / 2.0f);
-                child.setPivotY(cWidth / 2.0f);
-                child.setRotation((float) (90 + mStartAngle));
+            float angel;
+            switch (mItemRotateMode) {
+                case ITEM_ROTATE_MODE_NONE:
+                    angel = 0;
+                    break;
+                case ITEM_ROTATE_MODE_INWARD:
+                    angel = (float) (-90 + mStartAngle);
+                    break;
+                case ITEM_ROTATE_MODE_OUTWARD:
+                    angel = (float) (90 + mStartAngle);
+                    break;
+                default:
+                    angel = 0;
+                    break;
             }
+            child.setPivotX(cWidth / 2.0f);
+            child.setPivotY(cWidth / 2.0f);
+            child.setRotation(angel);
             mStartAngle += angleDelay;
 
         }
@@ -549,29 +573,31 @@ public class CursorWheelLayout extends ViewGroup {
             }
             canvas.restore();
         }
-        if (mGuideLineWidth > 0) {
-            float angleDelay;
-            int startIndex;
-            if (getCenterItem() != null) {
-                angleDelay = 360 / (getChildCount() - 1);
-                startIndex = 1;
-            } else {
-                angleDelay = 360 / (getChildCount());
-                startIndex = 0;
-            }
+        float angleDelay;
+        int startIndex;
+        if (getCenterItem() != null) {
+            angleDelay = 360 / (getChildCount() - 1);
+            startIndex = 1;
+        } else {
+            angleDelay = 360 / (getChildCount());
+            startIndex = 0;
+        }
+        if (mGuideLineWidth > 0 && getChildCount() - startIndex == mMenuItemCount) {
             canvas.save();
             canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
             View child = getChildAt(startIndex);
-            int startAngel = (int) (((Double) child.getTag(R.id.id_wheel_view_angle) + angleDelay / 2.f) % 360);
-            for (int i = startIndex; i < getChildCount(); i++) {
-                canvas.save();
-                canvas.rotate(startAngel);
-                mGuidePath.reset();
-                mGuidePath.moveTo(0, 0);
-                mGuidePath.lineTo(mRootDiameter / 2.f, 0);
-                canvas.drawPath(mGuidePath, mGuidePaint);
-                startAngel += angleDelay;
-                canvas.restore();
+            if (child != null) {
+                int startAngel = (int) (((Double) child.getTag(R.id.id_wheel_view_angle) + angleDelay / 2.f) % 360);
+                for (int i = startIndex; i < getChildCount(); i++) {
+                    canvas.save();
+                    canvas.rotate(startAngel);
+                    mGuidePath.reset();
+                    mGuidePath.moveTo(0, 0);
+                    mGuidePath.lineTo(mRootDiameter / 2.f, 0);
+                    canvas.drawPath(mGuidePath, mGuidePaint);
+                    startAngel += angleDelay;
+                    canvas.restore();
+                }
             }
             canvas.restore();
         }
@@ -1024,6 +1050,9 @@ public class CursorWheelLayout extends ViewGroup {
         setSelection(position, true);
     }
 
+    public int getItemRotateMode() {
+        return mItemRotateMode;
+    }
 
     /**
      * @param position

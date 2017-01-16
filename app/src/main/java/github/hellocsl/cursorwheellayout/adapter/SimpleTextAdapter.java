@@ -3,8 +3,10 @@ package github.hellocsl.cursorwheellayout.adapter;
 import android.content.Context;
 import android.support.v4.app.ActivityCompat;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,11 +23,17 @@ public class SimpleTextAdapter extends CursorWheelLayout.CycleWheelAdapter {
     private LayoutInflater mLayoutInflater;
     private Context mContext;
     public static final int INDEX_SPEC = 9;
+    private int mGravity;
 
     public SimpleTextAdapter(Context context, List<MenuItemData> menuItemDatas) {
+        this(context, menuItemDatas, Gravity.CENTER);
+    }
+
+    public SimpleTextAdapter(Context context, List<MenuItemData> menuItemDatas, int gravity) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mMenuItemDatas = menuItemDatas;
+        mGravity = gravity;
     }
 
     @Override
@@ -41,6 +49,9 @@ public class SimpleTextAdapter extends CursorWheelLayout.CycleWheelAdapter {
         textView.setVisibility(View.VISIBLE);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         textView.setText(item.mTitle);
+        if (textView.getLayoutParams() instanceof FrameLayout.LayoutParams) {
+            ((FrameLayout.LayoutParams) textView.getLayoutParams()).gravity = mGravity;
+        }
         if (position == INDEX_SPEC) {
             textView.setTextColor(ActivityCompat.getColor(mContext, R.color.red));
         }

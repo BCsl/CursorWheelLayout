@@ -2,6 +2,7 @@ package github.hellocsl.cursorwheellayout;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -46,10 +47,11 @@ public class MainActivity extends AppCompatActivity implements CursorWheelLayout
         for (int i = 0; i < res.length; i++) {
             menuItemDatas.add(new MenuItemData(res[i]));
         }
-        SimpleTextAdapter simpleTextAdapter = new SimpleTextAdapter(this, menuItemDatas);
+        SimpleTextAdapter simpleTextAdapter = new SimpleTextAdapter(this, menuItemDatas, Gravity.TOP | Gravity.CENTER_HORIZONTAL);
         mTestCircleMenuLeft.setAdapter(simpleTextAdapter);
         mTestCircleMenuLeft.setOnMenuSelectedListener(this);
-        mTestCircleMenuRight.setAdapter(simpleTextAdapter);
+        SimpleTextAdapter simpleTextAdapter2 = new SimpleTextAdapter(this, menuItemDatas, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        mTestCircleMenuRight.setAdapter(simpleTextAdapter2);
         mTestCircleMenuRight.setOnMenuSelectedListener(this);
         List<ImageData> imageDatas = new ArrayList<ImageData>();
         imageDatas.add(new ImageData(R.drawable.ic_bank_bc, "0"));
