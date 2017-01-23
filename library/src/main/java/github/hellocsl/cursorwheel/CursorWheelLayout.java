@@ -586,7 +586,7 @@ public class CursorWheelLayout extends ViewGroup {
             canvas.save();
             canvas.translate(mRootDiameter / 2f, mRootDiameter / 2f);
             View child = getChildAt(startIndex);
-            if (child != null) {
+            if (child != null && child.getTag(R.id.id_wheel_view_angle) != null) {
                 int startAngel = (int) (((Double) child.getTag(R.id.id_wheel_view_angle) + angleDelay / 2.f) % 360);
                 for (int i = startIndex; i < getChildCount(); i++) {
                     canvas.save();
