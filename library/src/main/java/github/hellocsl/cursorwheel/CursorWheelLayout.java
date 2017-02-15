@@ -26,17 +26,16 @@ import android.view.WindowManager;
  * The base cycle wheel menu layout with cursor
  *
  * @author chensuilun
- * @attr ref wheelSelectedAngle
- * @attr ref wheelPaddingRadio
- * @attr ref wheelCenterRadio
- * @attr ref wheelItemRadio
- * @attr ref wheelFlingValue
- * @attr ref wheelCursorColor
- * @attr ref wheelCursorHeight
- * @attr ref wheelItemRotateMode
- * @attr ref wheelGuideLineWidth
- * @attr ref wheelGuideLineColor
- * @see R.github.hellocsl.cursorwheel.R.attr
+ * @attr  R.styleable.CursorWheelLayout_wheelSelectedAngle
+ * @attr  R.styleable.CursorWheelLayout_wheelPaddingRadio
+ * @attr  R.styleable.CursorWheelLayout_wheelCenterRadio
+ * @attr  R.styleable.CursorWheelLayout_wheelItemRadio
+ * @attr  R.styleable.CursorWheelLayout_wheelFlingValue
+ * @attr  R.styleable.CursorWheelLayout_wheelCursorColor
+ * @attr  R.styleable.CursorWheelLayout_wheelCursorHeight
+ * @attr  R.styleable.CursorWheelLayout_wheelItemRotateMode
+ * @attr  R.styleable.CursorWheelLayout_wheelGuideLineWidth
+ * @attr  R.styleable.CursorWheelLayout_wheelGuideLineColor
  */
 public class CursorWheelLayout extends ViewGroup {
     private static final String TAG = "CircleMenuLayout";

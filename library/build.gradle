@@ -21,7 +21,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:support-annotations:23.2.1'
 }
 
 
@@ -29,7 +29,7 @@ publish {
     userOrg = 'bcsl'
     groupId = 'github.hellocsl'
     artifactId = 'CursorWheelLayout'
-    publishVersion = '1.0.2'
+    publishVersion = '1.1.0'
     desc = 'An Android Widget for selecting items that rotate on a wheel'
     website = 'https://github.com/BCsl/CursorWheelLayout'
 }
