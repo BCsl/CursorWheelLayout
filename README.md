@@ -17,7 +17,7 @@ You can also receive a callback for when an item is clicked, and whether it is s
 
 ### Gradle
 
-`compile 'github.hellocsl:CursorWheelLayout:1.1.0'`
+`implementation 'github.hellocsl:CursorWheelLayout:1.1.0'`
 
 ### Maven
 
