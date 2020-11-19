@@ -12,7 +12,6 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,21 +20,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import androidx.annotation.ColorInt;
+
 
 /**
  * The base cycle wheel menu layout with cursor
  *
  * @author chensuilun
- * @attr  R.styleable.CursorWheelLayout_wheelSelectedAngle
- * @attr  R.styleable.CursorWheelLayout_wheelPaddingRadio
- * @attr  R.styleable.CursorWheelLayout_wheelCenterRadio
- * @attr  R.styleable.CursorWheelLayout_wheelItemRadio
- * @attr  R.styleable.CursorWheelLayout_wheelFlingValue
- * @attr  R.styleable.CursorWheelLayout_wheelCursorColor
- * @attr  R.styleable.CursorWheelLayout_wheelCursorHeight
- * @attr  R.styleable.CursorWheelLayout_wheelItemRotateMode
- * @attr  R.styleable.CursorWheelLayout_wheelGuideLineWidth
- * @attr  R.styleable.CursorWheelLayout_wheelGuideLineColor
+ * @attr R.styleable.CursorWheelLayout_wheelSelectedAngle
+ * @attr R.styleable.CursorWheelLayout_wheelPaddingRadio
+ * @attr R.styleable.CursorWheelLayout_wheelCenterRadio
+ * @attr R.styleable.CursorWheelLayout_wheelItemRadio
+ * @attr R.styleable.CursorWheelLayout_wheelFlingValue
+ * @attr R.styleable.CursorWheelLayout_wheelCursorColor
+ * @attr R.styleable.CursorWheelLayout_wheelCursorHeight
+ * @attr R.styleable.CursorWheelLayout_wheelItemRotateMode
+ * @attr R.styleable.CursorWheelLayout_wheelGuideLineWidth
+ * @attr R.styleable.CursorWheelLayout_wheelGuideLineColor
  */
 public class CursorWheelLayout extends ViewGroup {
     private static final String TAG = "CircleMenuLayout";
@@ -146,6 +147,7 @@ public class CursorWheelLayout extends ViewGroup {
     private boolean mIsDraging;
 
     /**
+     *
      */
     private float mLastX;
     private float mLastY;

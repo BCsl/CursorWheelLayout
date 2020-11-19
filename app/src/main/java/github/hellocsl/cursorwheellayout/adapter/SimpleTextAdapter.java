@@ -1,13 +1,14 @@
 package github.hellocsl.cursorwheellayout.adapter;
 
 import android.content.Context;
-import android.support.v4.app.ActivityCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
 
 import java.util.List;
 

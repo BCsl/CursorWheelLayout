@@ -11,10 +11,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.SoundEffectConstants;
 import android.view.View;
+
+import androidx.annotation.ColorInt;
 
 import github.hellocsl.cursorwheellayout.R;
 
