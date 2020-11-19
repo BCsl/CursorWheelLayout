@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(), OnMenuSelectedListener {
 
     override fun onItemSelected(p: CursorWheelLayout, view: View?, pos: Int) {}
 
-    fun onRandomClick() {
+    private fun onRandomClick() {
         val index = mRandom.nextInt(10)
         viewBinding.testCircleMenuLeft.setSelection(index)
         viewBinding.testCircleMenuRight.setSelection(index, false)

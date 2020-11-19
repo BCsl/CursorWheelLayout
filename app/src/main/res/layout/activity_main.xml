@@ -34,17 +34,7 @@
             app:wheelCursorColor="#009688"
             app:wheelCursorHeight="19dip"
             app:wheelItemRotateMode="none"
-            app:wheelSelectedAngle="270">
-
-            <TextView
-                android:id="@+id/id_wheel_menu_center_item_2"
-                style="@style/TextAppearance.AppCompat.Large.Inverse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Wheel"
-                android:textColor="#009688" />
-        </github.hellocsl.cursorwheel.CursorWheelLayout>
+            app:wheelSelectedAngle="270"/>
 
         <github.hellocsl.cursorwheellayout.widget.SimpleTextCursorWheelLayout
             android:id="@+id/test_circle_menu_right"
