@@ -12,7 +12,7 @@ import github.hellocsl.cursorwheellayout.data.ImageData
  * Created by chensuilun on 16/4/24.
  */
 class SimpleImageAdapter(
-    private val mContext: Context, private val mMenuItemDatas: List<ImageData>
+    mContext: Context, private val mMenuItemDatas: List<ImageData>
 ) : CycleWheelAdapter() {
 
     private val mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)

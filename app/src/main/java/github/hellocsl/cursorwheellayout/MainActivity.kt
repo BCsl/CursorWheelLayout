@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import butterknife.OnClick
 import github.hellocsl.cursorwheel.CursorWheelLayout
 import github.hellocsl.cursorwheel.CursorWheelLayout.OnMenuSelectedListener
 import github.hellocsl.cursorwheellayout.adapter.SimpleImageAdapter
@@ -70,11 +69,14 @@ class MainActivity : AppCompatActivity(), OnMenuSelectedListener {
                 ).show()
             }
         })
+
+        viewBinding.mainButtonRandomSelected.setOnClickListener {
+            onRandomClick()
+        }
     }
 
     override fun onItemSelected(p: CursorWheelLayout, view: View?, pos: Int) {}
 
-    @OnClick(R.id.main_button_random_selected)
     fun onRandomClick() {
         val index = mRandom.nextInt(10)
         viewBinding.testCircleMenuLeft.setSelection(index)
