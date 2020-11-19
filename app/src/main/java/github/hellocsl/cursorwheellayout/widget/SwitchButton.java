@@ -19,7 +19,6 @@ import androidx.annotation.ColorInt;
 
 import github.hellocsl.cursorwheellayout.R;
 
-
 /**
  * <p/>
  * Created by chensuilun on 16-4-13.
@@ -393,7 +392,7 @@ public class SwitchButton extends View {
          * @param buttonView The compound button view whose state has changed.
          * @param isChecked  The new checked state of buttonView.
          */
-        void onCheckedChanged(SwitchButton buttonView, boolean isChecked);
+        public void onCheckedChanged(SwitchButton buttonView, boolean isChecked);
     }
 
     /**

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#4C3C4952"
@@ -19,7 +19,7 @@
             app:wheelSelectedAngle="0">
 
             <github.hellocsl.cursorwheellayout.widget.SwitchButton
-                android:id="@id/id_wheel_menu_center_item"
+                android:id="@+id/id_wheel_menu_center_item_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:boardWidth="0dip"
@@ -37,7 +37,7 @@
             app:wheelSelectedAngle="270">
 
             <TextView
-                android:id="@id/id_wheel_menu_center_item"
+                android:id="@+id/id_wheel_menu_center_item_2"
                 style="@style/TextAppearance.AppCompat.Large.Inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             app:wheelSelectedAngle="225">
 
             <github.hellocsl.cursorwheellayout.widget.SwitchButton
-                android:id="@id/id_wheel_menu_center_item"
+                android:id="@+id/id_wheel_menu_center_item_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:boardWidth="0dip"
