@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:gravity="center"
-             tools:background="@color/bg_wheel">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    tools:background="@color/bg_wheel">
 
     <ImageView
         android:id="@+id/wheel_menu_item_iv"
@@ -13,7 +12,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:scaleType="centerInside"
-        tools:src="@drawable/ic_bank_bc"
-    />
-
+        tools:src="@drawable/ic_bank_bc" />
 </FrameLayout>

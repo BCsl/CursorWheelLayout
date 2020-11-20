@@ -155,14 +155,11 @@ open class CursorWheelLayout : ViewGroup {
     private val mBgRegion = Region()
     private val mGuidePath = Path()
     private var mGuidePaint: Paint? = null
-    var itemRotateMode = ITEM_ROTATE_MODE_NONE
-        private set
+    private var itemRotateMode = ITEM_ROTATE_MODE_NONE
 
     @JvmOverloads
     constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(
-        context,
-        attrs,
-        defStyleAttr
+        context, attrs, defStyleAttr
     ) {
         initWheel(context, attrs)
     }
@@ -948,7 +945,7 @@ open class CursorWheelLayout : ViewGroup {
     }
 
     override fun onDetachedFromWindow() {
-        removeAllViews()
+        //removeAllViews()
         super.onDetachedFromWindow()
         mFlingRunnable.stop(false)
         mIsFirstLayout = false

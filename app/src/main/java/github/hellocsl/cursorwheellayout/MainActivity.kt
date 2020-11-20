@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), OnMenuSelectedListener {
             SimpleTextAdapter(this, menuItemDatas, Gravity.TOP or Gravity.CENTER_HORIZONTAL)
         viewBinding.testCircleMenuLeft.setAdapter(simpleTextAdapter)
         viewBinding.testCircleMenuLeft.setOnMenuSelectedListener(this)
+
         val simpleTextAdapter2 =
             SimpleTextAdapter(this, menuItemDatas, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
         viewBinding.testCircleMenuRight.setAdapter(simpleTextAdapter2)

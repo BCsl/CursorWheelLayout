@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:gravity="center"
-             tools:background="@color/bg_wheel">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    tools:background="@color/bg_wheel">
 
 
     <TextView
@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_horizontal"
+        android:padding="6dp"
         android:textColor="@color/primary_text_light"
-        android:padding="6dip"
-        android:textSize="14.0dip"
+        android:textSize="14sp"
         tools:text="Test"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 </FrameLayout>

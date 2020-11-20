@@ -15,7 +15,7 @@ import github.hellocsl.cursorwheellayout.data.MenuItemData
 /**
  * Created by chensuilun on 16/4/24.
  */
-class SimpleTextAdapter @JvmOverloads constructor(
+class SimpleTextAdapter constructor(
     private val mContext: Context,
     val mMenuItemDatas: List<MenuItemData>,
     val mGravity: Int = Gravity.CENTER
