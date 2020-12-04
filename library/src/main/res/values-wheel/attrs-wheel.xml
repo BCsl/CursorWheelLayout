@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CursorWheelLayout">
-        <attr name="wheelSelectedAngle" format="float"></attr>
-        <attr name="wheelPaddingRadio" format="float"></attr>
-        <attr name="wheelCenterRadio" format="float"></attr>
-        <attr name="wheelItemRadio" format="float"></attr>
-        <attr name="wheelFlingValue" format="integer"></attr>
-        <attr name="wheelCursorHeight" format="dimension"></attr>
-        <attr name="wheelCursorColor" format="color"></attr>
-        <attr name="wheelBackgroundColor" format="color"></attr>
+        <attr name="wheelSelectedAngle" format="float" />
+        <attr name="wheelPaddingRadio" format="float" />
+        <attr name="wheelCenterRadio" format="float" />
+        <attr name="wheelItemRadio" format="float" />
+        <attr name="wheelFlingValue" format="integer" />
+        <attr name="wheelCursorHeight" format="dimension" />
+        <attr name="wheelCursorColor" format="color" />
+        <attr name="wheelBackgroundColor" format="color" />
         <attr name="wheelItemRotateMode" format="enum">
-            <enum name="none" value="0"></enum>
-            <enum name="inward" value="1"></enum>
-            <enum name="outward" value="2"></enum>
+            <enum name="none" value="0" />
+            <enum name="inward" value="1" />
+            <enum name="outward" value="2" />
         </attr>
-        <attr name="wheelGuideLineWidth" format="dimension"></attr>
-        <attr name="wheelGuideLineColor" format="color"></attr>
+        <attr name="wheelGuideLineWidth" format="dimension" />
+        <attr name="wheelGuideLineColor" format="color" />
     </declare-styleable>
 </resources>
